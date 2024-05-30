@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Controller, Post, Put, Delete, Body, Get, Param } from '@nestjs/common';
 import { ExcelService } from './excel.service';
 
