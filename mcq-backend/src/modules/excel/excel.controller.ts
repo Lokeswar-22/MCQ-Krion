@@ -8,7 +8,7 @@ export class ExcelController {
 
   @Get('excel')
   getExcelData(): any[] {
-    return this.excelService.convertExcelToJSON('../mcq-backend/Book.xlsx', 'Sheet1').slice(1); // Remove header row
+    return this.excelService.convertExcelToJSON('../mcq-backend/Book.xlsx', 'Sheet1').slice(1); 
   }
 
   @Get('questions')
@@ -47,7 +47,7 @@ export class ExcelController {
       return 'Candidate not found';
     }
     
-    const questionIndex = parseInt(id) + 2; // Q1 is in the 3rd column
+    const questionIndex = parseInt(id) + 2;
     candidateRow[questionIndex] = body.answer === correctAnswer ? validationValue : 0;
     
     const totalColumnIndex = 23;
@@ -59,7 +59,7 @@ export class ExcelController {
 
   @Get('marks/:candidateName')
   async getTotalMarks(@Param('candidateName') candidateName: string): Promise<any> {
-    const excelData = this.excelService.convertExcelToJSON('../mcq-backend/Book.xlsx', 'Sheet2').slice(1); // Remove header row
+    const excelData = this.excelService.convertExcelToJSON('../mcq-backend/Book.xlsx', 'Sheet2').slice(1); 
     const candidateRow = excelData.find(row => row[1] === candidateName);
     if (!candidateRow) {
       return 'Candidate not found';
@@ -70,7 +70,7 @@ export class ExcelController {
 
   @Get('candidateinfo')
   getCandidateInfo(): any[] {
-    const excelData = this.excelService.convertExcelToJSON('../mcq-backend/Book.xlsx', 'Sheet2').slice(1); // Remove header row
+    const excelData = this.excelService.convertExcelToJSON('../mcq-backend/Book.xlsx', 'Sheet2').slice(1); 
     return excelData.map(row => ({ id: row[0], candidateName: row[1], candidateRegisterNumber: row[2], totalMarks:row[23] }));
   }
   @Post('candidateinfo')
