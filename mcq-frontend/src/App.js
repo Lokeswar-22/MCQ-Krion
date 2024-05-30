@@ -133,7 +133,7 @@ function App() {
       {!isValidCandidate ? (
         <div className="login-container">
           <h2>Login</h2>
-          <input type="text" placeholder="Candidate Name" value={candidateName} onChange={e => setCandidateName(e.target.value)} />
+          <input type="text" placeholder="Name" value={candidateName} onChange={e => setCandidateName(e.target.value)} />
           <input type="text" placeholder="Register Number" value={candidateRegisterNumber} onChange={e => setCandidateRegisterNumber(e.target.value)} />
           <button onClick={handleLogin}>Login</button>
         </div>
