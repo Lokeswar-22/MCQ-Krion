@@ -13,7 +13,6 @@ function App() {
   const [resultMessage, setResultMessage] = useState('');
   const [candidateInfo, setCandidateInfo] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
-
   const [newCandidateName, setNewCandidateName] = useState('');
   const [newCandidateRegisterNumber, setNewCandidateRegisterNumber] = useState('');
   const [updateCandidateId, setUpdateCandidateId] = useState('');
