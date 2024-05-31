@@ -187,7 +187,8 @@ function App() {
                   </div>
                 </div>
               ) : (
-                <div className="question-card">
+                <div className="question-container">
+                                  <div className="question-card">
                   <h2>Question {currentQuestionId}</h2>
                   <h3>{question}</h3>
                   <ul className="options-list">
@@ -208,6 +209,8 @@ function App() {
                   <button onClick={submitAnswer}>Submit Answer</button>
                   {resultMessage && <p>{resultMessage}</p>}
                 </div>
+                  </div>
+
               )}
             </div>
           )
