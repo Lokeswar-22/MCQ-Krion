@@ -71,7 +71,9 @@ export class ExcelController {
   getCandidateInfo(): any[] {
     const excelData = this.excelService.convertExcelToJSON('../mcq-backend/Book.xlsx', 'Sheet2').slice(1); 
     return excelData.map(row => ({ id: row[0], candidateName: row[1], candidateRegisterNumber: row[2], totalMarks:row[23] }));
+
   }
+
   @Post('candidateinfo')
   addCandidate(@Body() body: { candidateName: string, candidateRegisterNumber: string, adminName: string, adminRegNumber: string }): string {
     if (body.adminName !== 'admin' || body.adminRegNumber !== 'adminhr123') {

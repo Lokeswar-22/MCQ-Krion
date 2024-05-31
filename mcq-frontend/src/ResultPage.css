@@ -1,0 +1,37 @@
+.result-page {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+  }
+  
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .result-container {
+    display: inline-block;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .total-marks {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .sticker {
+    font-size: 32px;
+    margin-top: 20px;
+  }
+  
+  .error-message {
+    color: #ff0000;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
+import ResultPage from './ResultPage';
 
 function App() {
   const [candidateName, setCandidateName] = useState('');
@@ -19,6 +21,8 @@ function App() {
   const [updateCandidateName, setUpdateCandidateName] = useState('');
   const [updateCandidateRegisterNumber, setUpdateCandidateRegisterNumber] = useState('');
   const [deleteCandidateId, setDeleteCandidateId] = useState('');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCandidateInfo();
@@ -62,7 +66,7 @@ function App() {
       if (currentQuestionId < 20) {
         setCurrentQuestionId(prevId => prevId + 1);
       } else {
-        setResultMessage(`Successfully completed the test ${candidateName}`);
+        navigate(`/result/${candidateName}`);
       }
     } catch (error) {
       console.error('Error submitting answer:', error);
@@ -130,84 +134,88 @@ function App() {
       <header className="App-header">
         <h1>Krion Consulting</h1>
       </header>
-      {!isValidCandidate ? (
-        <div className="login-container">
-          <h2>Login</h2>
-          <input type="text" placeholder="Name" value={candidateName} onChange={e => setCandidateName(e.target.value)} />
-          <input type="text" placeholder="Register Number" value={candidateRegisterNumber} onChange={e => setCandidateRegisterNumber(e.target.value)} />
-          <button onClick={handleLogin}>Login</button>
-        </div>
-      ) : (
-        <div className="content-container">
-          {isAdmin ? (
-            <div className="admin-panel">
-              <h2>Admin Panel</h2>
-              <div className="candidate-info">
-                <h3>Candidate Info</h3>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Candidate Name</th>
-                      <th>Register Number</th>
-                      <th>Scored mark</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {candidateInfo.map(candidate => (
-                      <tr key={candidate.id}>
-                        <td>{candidate.id}</td>
-                        <td>{candidate.candidateName}</td>
-                        <td>{candidate.candidateRegisterNumber}</td>
-                        <td>{candidate.totalMarks}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="crud-operations">
-                <h3>Add Candidate</h3>
-                <input type="text" placeholder="Candidate Name" value={newCandidateName} onChange={e => setNewCandidateName(e.target.value)} />
-                <input type="text" placeholder="Register Number" value={newCandidateRegisterNumber} onChange={e => setNewCandidateRegisterNumber(e.target.value)} />
-                <button onClick={handleAddCandidate}>Add Candidate</button>
-                <h3>Update Candidate</h3>
-                <input type="text" placeholder="Candidate ID" value={updateCandidateId} onChange={e => setUpdateCandidateId(e.target.value)} />
-                <input type="text" placeholder="New Candidate Name" value={updateCandidateName} onChange={e => setUpdateCandidateName(e.target.value)} />
-                <input type="text" placeholder="New Register Number" value={updateCandidateRegisterNumber} onChange={e => setUpdateCandidateRegisterNumber(e.target.value)} />
-                <button onClick={handleUpdateCandidate}>Update Candidate</button>
-                <h3>Delete Candidate</h3>
-                <input type="text" placeholder="Candidate ID" value={deleteCandidateId} onChange={e => setDeleteCandidateId(e.target.value)} />
-                <button onClick={handleDeleteCandidate}>Delete Candidate</button>
-              </div>
+      <Routes>
+        <Route exact path="/" element={
+          !isValidCandidate ? (
+            <div className="login-container">
+              <h2>Login</h2>
+              <input type="text" placeholder="Name" value={candidateName} onChange={e => setCandidateName(e.target.value)} />
+              <input type="text" placeholder="Register Number" value={candidateRegisterNumber} onChange={e => setCandidateRegisterNumber(e.target.value)} />
+              <button onClick={handleLogin}>Login</button>
             </div>
           ) : (
-            <div className="question-card">
-              <h2>Question {currentQuestionId}</h2>
-              <h3>{question}</h3>
-              <ul className="options-list">
-                {options.map(option => (
-                  <li key={option}>
-                    <input
-                      type="radio"
-                      id={option}
-                      name="option"
-                      value={option}
-                      checked={selectedOption === option}
-                      onChange={handleOptionChange}
-                    />
-                    <label htmlFor={option}>{option}</label>
-                  </li>
-                ))}
-              </ul>
-              <button onClick={submitAnswer}>Submit Answer</button>
-              {resultMessage && <p>{resultMessage}</p>}
+            <div className="content-container">
+              {isAdmin ? (
+                <div className="admin-panel">
+                  <h2>Admin Panel</h2>
+                  <div className="candidate-info">
+                    <h3>Candidate Info</h3>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Candidate Name</th>
+                          <th>Register Number</th>
+                          <th>Scored mark</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {candidateInfo.map(candidate => (
+                          <tr key={candidate.id}>
+                            <td>{candidate.id}</td>
+                            <td>{candidate.candidateName}</td>
+                            <td>{candidate.candidateRegisterNumber}</td>
+                            <td>{candidate.totalMarks}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="crud-operations">
+                    <h3>Add Candidate</h3>
+                    <input type="text" placeholder="Candidate Name" value={newCandidateName} onChange={e => setNewCandidateName(e.target.value)} />
+                    <input type="text" placeholder="Register Number" value={newCandidateRegisterNumber} onChange={e => setNewCandidateRegisterNumber(e.target.value)} />
+                    <button onClick={handleAddCandidate}>Add Candidate</button>
+                    <h3>Update Candidate</h3>
+                    <input type="text" placeholder="Candidate ID" value={updateCandidateId} onChange={e => setUpdateCandidateId(e.target.value)} />
+                    <input type="text" placeholder="New Candidate Name" value={updateCandidateName} onChange={e => setUpdateCandidateName(e.target.value)} />
+                    <input type="text" placeholder="New Register Number" value={updateCandidateRegisterNumber} onChange={e => setUpdateCandidateRegisterNumber(e.target.value)} />
+                    <button onClick={handleUpdateCandidate}>Update Candidate</button>
+                    <h3>Delete Candidate</h3>
+                    <input type="text" placeholder="Candidate ID" value={deleteCandidateId} onChange={e => setDeleteCandidateId(e.target.value)} />
+                    <button onClick={handleDeleteCandidate}>Delete Candidate</button>
+                  </div>
+                </div>
+              ) : (
+                <div className="question-card">
+                  <h2>Question {currentQuestionId}</h2>
+                  <h3>{question}</h3>
+                  <ul className="options-list">
+                    {options.map(option => (
+                      <li key={option}>
+                        <input
+                          type="radio"
+                          id={option}
+                          name="option"
+                          value={option}
+                          checked={selectedOption === option}
+                          onChange={handleOptionChange}
+                        />
+                        <label htmlFor={option}>{option}</label>
+                      </li>
+                    ))}
+                  </ul>
+                  <button onClick={submitAnswer}>Submit Answer</button>
+                  {resultMessage && <p>{resultMessage}</p>}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      )}
+          )
+        } />
+        <Route path="/result/:candidateName" element={<ResultPage />} />
+      </Routes>
     </div>
   );
 }
-
 
 export default App;
