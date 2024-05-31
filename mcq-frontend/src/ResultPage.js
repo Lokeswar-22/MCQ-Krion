@@ -26,7 +26,7 @@ const ResultPage = () => {
     fetchTotalMarks();
   }, [candidateName]);
 
-  const getSticker = () => {
+  const resultstatus = () => {
     if (totalMarks >= 90) {
       return 'Excellent!';
     } else if (totalMarks >= 75) {
@@ -46,7 +46,7 @@ const ResultPage = () => {
       ) : (
         <div className="result-container">
           <p className="total-marks">Total Marks: {totalMarks !== null ? totalMarks : 'Loading...'}</p>
-          {totalMarks !== null && <p className="sticker">{getSticker()}</p>}
+          {totalMarks !== null && <p className="sticker">{resultstatus()}</p>}
         </div>
       )}
     </div>
