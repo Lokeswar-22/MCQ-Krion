@@ -21,11 +21,30 @@ function App() {
   const [updateCandidateName, setUpdateCandidateName] = useState('');
   const [updateCandidateRegisterNumber, setUpdateCandidateRegisterNumber] = useState('');
   const [deleteCandidateId, setDeleteCandidateId] = useState('');
+  const [timeRemaining, setTimeRemaining] = useState(15 * 60); 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchCandidateInfo();
   }, []);
+
+  useEffect(() => {
+    if (isValidCandidate && !isAdmin) {
+      fetchQuestion();
+      const timer = setInterval(() => {
+        setTimeRemaining(prevTime => {
+          if (prevTime <= 1) {
+            clearInterval(timer);
+            navigate(`/result/${candidateName}`);
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [isValidCandidate, currentQuestionId, isAdmin, navigate, candidateName]);
 
   const fetchCandidateInfo = async () => {
     try {
@@ -187,29 +206,31 @@ function App() {
                 </div>
               ) : (
                 <div className="question-container">
-                                  <div className="question-card">
-                  <h2>Question {currentQuestionId}</h2>
-                  <h3>{question}</h3>
-                  <ul className="options-list">
-                    {options.map(option => (
-                      <li key={option}>
-                        <input
-                          type="radio"
-                          id={option}
-                          name="option"
-                          value={option}
-                          checked={selectedOption === option}
-                          onChange={handleOptionChange}
-                        />
-                        <label htmlFor={option}>{option}</label>
-                      </li>
-                    ))}
-                  </ul>
-                  <button onClick={submitAnswer}>Submit Answer</button>
-                  {resultMessage && <p>{resultMessage}</p>}
-                </div>
+                  <div className="question-card">
+                    <h2>Question {currentQuestionId}</h2>
+                    <h3>{question}</h3>
+                    <ul className="options-list">
+                      {options.map(option => (
+                        <li key={option}>
+                          <input
+                            type="radio"
+                            id={option}
+                            name="option"
+                            value={option}
+                            checked={selectedOption === option}
+                            onChange={handleOptionChange}
+                          />
+                          <label htmlFor={option}>{option}</label>
+                        </li>
+                      ))}
+                    </ul>
+                    <button onClick={submitAnswer}>Submit Answer</button>
+                    {resultMessage && <p>{resultMessage}</p>}
                   </div>
-
+                  <div className="timer">
+                    <h3>Time Remaining: {Math.floor(timeRemaining / 60)}:{('0' + timeRemaining % 60).slice(-2)}</h3>
+                  </div>
+                </div>
               )}
             </div>
           )
