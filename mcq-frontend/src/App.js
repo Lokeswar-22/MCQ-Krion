@@ -21,7 +21,6 @@ function App() {
   const [updateCandidateName, setUpdateCandidateName] = useState('');
   const [updateCandidateRegisterNumber, setUpdateCandidateRegisterNumber] = useState('');
   const [deleteCandidateId, setDeleteCandidateId] = useState('');
-
   const navigate = useNavigate();
 
   useEffect(() => {
