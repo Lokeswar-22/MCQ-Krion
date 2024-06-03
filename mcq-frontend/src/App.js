@@ -150,7 +150,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Krion Consulting</h1>
+        <h1>Krion MCQ</h1>
       </header>
       <Routes>
         <Route exact path="/" element={
